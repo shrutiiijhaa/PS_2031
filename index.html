@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>No Escape Puneet 💛</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
+  background:radial-gradient(circle at top,#0b1d3a,#000);
+  color:white;
+}
+.center{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+}
+button{
+  padding:12px 30px;
+  font-size:16px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  margin:12px;
+}
+#yes{
+  background:#ffd166;
+  color:#000;
+  font-weight:bold;
+}
+#no{
+  background:#ef476f;
+  color:white;
+  position:absolute;
+}
+
+/* Stars */
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  border-radius:50%;
+  animation:twinkle 2s infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:.2}
+  50%{opacity:1}
+}
+
+/* Fireworks */
+.firework{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:gold;
+  border-radius:50%;
+  animation:explode 1s forwards;
+}
+@keyframes explode{
+  from{transform:scale(1);opacity:1}
+  to{transform:scale(20);opacity:0}
+}
+
+/* Sunflower */
+.sunflower-container{
+  position:relative;
+  width:200px;
+  height:200px;
+  margin:20px auto;
+}
+.petal{
+  position:absolute;
+  width:40px;
+  height:80px;
+  background:#FFD700;
+  border-radius:50%;
+  top:20px;
+  left:80px;
+  transform-origin:bottom center;
+  opacity:0;
+  animation:petalBloom .5s forwards;
+}
+@keyframes petalBloom{
+  from{transform:scale(0) rotate(var(--angle));opacity:0}
+  to{transform:scale(1) rotate(var(--angle));opacity:1}
+}
+.center-circle{
+  position:absolute;
+  width:60px;
+  height:60px;
+  background:#5a3a1a;
+  border-radius:50%;
+  top:70px;
+  left:70px;
+  opacity:0;
+  animation:centerAppear 1s forwards;
+  animation-delay:2.5s;
+}
+@keyframes centerAppear{to{opacity:1}}
+
+/* Bride Groom */
+.couple{
+  font-size:80px;
+  animation:dance 2s infinite alternate;
+}
+@keyframes dance{
+  from{transform:translateX(-10px)}
+  to{transform:translateX(10px)}
+}
+
+.big-text{
+  font-size:34px;
+  font-weight:bold;
+  margin:25px 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="center" id="page1">
+<h1>Hey Puneet!! 💛</h1>
+<p>I have a <b>crazy deal</b> for you 😏<br>Do you want to know what?</p>
+<button id="yes" onclick="yesFlow()">YES 😌</button>
+<button id="no" onmouseover="moveNo()">NO 🏃‍♂️</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="center" id="page2" style="display:none;">
+<h2 id="question">Are you sure? 🤨</h2>
+<button id="yes" onclick="confirmYes()">YES 💍</button>
+</div>
+
+<!-- PAGE 3 DEAL -->
+<div class="center" id="dealPage" style="display:none;">
+<h1>🌌 No Escape 🌌</h1>
+<div class="sunflower-container" id="sunflower"></div>
+<p>
+💖 Unlimited Love<br>
+🤗 Infinite Hugs<br>
+✈️ Trips & Adventures<br>
+😤 Cute FIGHTS<br><br>
+<b>For the next 60 years 💫</b>
+</p>
+</div>
+
+<!-- PAGE 4 PROMISE -->
+<div class="center" id="promisePage" style="display:none;">
+<h2>Want more? 😏</h2>
+<h3 id="promiseQ">Promise? 🤞</h3>
+<button id="yes" onclick="promiseYes()">YES ❤️</button>
+<button id="no" onmouseover="moveNoPromise()">NO 😶</button>
+</div>
+
+<!-- PAGE 5 FINAL -->
+<div class="center" id="finalPage" style="display:none;">
+<div class="big-text">
+DON’T DARE TO THINK<br>
+THAT WE ARE NOT<br>
+GOING TO MAKE IT 💛
+</div>
+<div class="couple">👰‍♀️💍🤵‍♂️</div>
+<p>Forever & Always 😌</p>
+</div>
+
+<script>
+let yesCount=0, promiseCount=0;
+
+function moveNo(){
+  no.style.left=Math.random()*(innerWidth-100)+"px";
+  no.style.top=Math.random()*(innerHeight-50)+"px";
+}
+
+function yesFlow(){
+  page1.style.display="none";
+  page2.style.display="block";
+}
+
+function confirmYes(){
+  yesCount++;
+  question.innerText=yesCount==1?
+  "Last chance… sure sure? 😌":"Okay then… trapped 😏";
+  if(yesCount==2) launchDeal();
+}
+
+function launchDeal(){
+  page2.style.display="none";
+  dealPage.style.display="block";
+  createStars(); fireworks(); drawSunflower();
+  setTimeout(()=>{
+    dealPage.style.display="none";
+    promisePage.style.display="block";
+  },5000);
+}
+
+function createStars(){
+  for(let i=0;i<120;i++){
+    let s=document.createElement("div");
+    s.className="star";
+    s.style.left=Math.random()*innerWidth+"px";
+    s.style.top=Math.random()*innerHeight+"px";
+    document.body.appendChild(s);
+  }
+}
+
+function fireworks(){
+  setInterval(()=>{
+    let f=document.createElement("div");
+    f.className="firework";
+    f.style.left=Math.random()*innerWidth+"px";
+    f.style.top=Math.random()*innerHeight+"px";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1000);
+  },300);
+}
+
+function drawSunflower(){
+  for(let i=0;i<12;i++){
+    let p=document.createElement("div");
+    p.className="petal";
+    p.style.setProperty("--angle",i*30+"deg");
+    p.style.animationDelay=i*.15+"s";
+    sunflower.appendChild(p);
+  }
+  sunflower.appendChild(Object.assign(document.createElement("div"),{className:"center-circle"}));
+}
+
+function promiseYes(){
+  promiseCount++;
+  const q=document.getElementById("promiseQ");
+  const text=[
+    "Promise? 🤞",
+    "Pakki wali promise? 😌",
+    "No backing out 😏",
+    "Forever FOREVER 💍"
+  ];
+  q.innerText=text[promiseCount]||"Locked 💛";
+  if(promiseCount>=4){
+    setTimeout(()=>{
+      promisePage.style.display="none";
+      finalPage.style.display="block";
+    },1000);
+  }
+}
+
+function moveNoPromise(){
+  const n=document.getElementById("no");
+  n.innerText="Don’t you want to live longer? 😈";
+  n.style.left=Math.random()*(innerWidth-160)+"px";
+  n.style.top=Math.random()*(innerHeight-80)+"px";
+}
+</script>
+
+</body>
+</html>
